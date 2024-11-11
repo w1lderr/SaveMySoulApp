@@ -82,7 +82,7 @@ fun ShowUsersScreen(navController: NavController, viewModel: ShowUsersViewModel 
         } ?: Text(
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center,
-            text = "No books found",
+            text = "No users found",
             fontSize = 20.sp,
             color = Color.Red
         )
