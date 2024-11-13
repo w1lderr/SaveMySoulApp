@@ -1,12 +1,12 @@
 package com.example.savemysoul.ui.screens.Home
 
-import android.app.Activity
 import android.content.Context
-import android.content.pm.PackageManager
-import android.location.LocationManager
+import android.content.Intent
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,8 +36,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.ActivityCompat
-import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.savemysoul.navigation.Screens
@@ -48,27 +46,14 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
     val userList by viewModel.userList.observeAsState(emptyList())
     val uiState by viewModel.uiState.observeAsState(HomeUiState())
     val context = LocalContext.current
-    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-    val task = fusedLocationProviderClient.lastLocation
+    val locationUtils = LocationUtils(context)
 
     LaunchedEffect(uiState.toast) {
         uiState.toast.let {
             if (it.isNotEmpty()) {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                viewModel.clearToast()
+                viewModel.setToast("")
             }
-        }
-    }
-
-    if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
-        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        ActivityCompat.requestPermissions(context as Activity, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
-        return
-    }
-
-    task.addOnSuccessListener {
-        if ( it != null) {
-            viewModel.setLocation("${it.latitude} ${it.longitude}")
         }
     }
 
@@ -117,7 +102,11 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
             ) {
                 Button(
                     onClick = {
-                        viewModel.sendSOS()
+                        checkLocationAndSendSos(
+                            locationUtils,
+                            context,
+                            viewModel
+                        )
                     },
                     modifier = Modifier.size(width = 270.dp, height = 120.dp),
                     shape = RoundedCornerShape(8.dp),
@@ -181,4 +170,30 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
             }
         }
     }
+}
+
+private fun checkLocationAndSendSos(
+    locationUtils: LocationUtils,
+    context: Context,
+    viewModel: HomeViewModel
+) {
+    locationUtils.getCurrentLocation(
+        onLocationReceived = { location ->
+            if (location != null) {
+                viewModel.sendSOS("${location.latitude} ${location.longitude}")
+            } else {
+                viewModel.setToast("Не вдалося отримати вашу локацію :(")
+            }
+        },
+        onPermissionDenied = {
+            viewModel.setToast("Дайти доступ до вашої локації будь ласка :)")
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val uri = Uri.fromParts("package", context.packageName, null)
+            intent.data = uri
+            context.startActivity(intent)
+        },
+        onLocationDisabled = {
+            viewModel.setToast("Вімкніть локацію будь ласка :)")
+        }
+    )
 }

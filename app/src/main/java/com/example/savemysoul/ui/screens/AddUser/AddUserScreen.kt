@@ -50,15 +50,15 @@ fun AddUserScreen(navController: NavController, viewModel: AddUserViewModel = vi
         uiState.toast.let {
             if (it.isNotEmpty()) {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                viewModel.clearToast()
+                viewModel.setToast("")
             }
         }
     }
 
     LaunchedEffect(uiState.isSuccess) {
-        if (uiState.isSuccess == true) {
+        if (uiState.isSuccess) {
             navController.navigate(Screens.HomeScreen.name)
-            viewModel.clearIsSuccess()
+            viewModel.setIsSuccess(false)
         }
     }
 

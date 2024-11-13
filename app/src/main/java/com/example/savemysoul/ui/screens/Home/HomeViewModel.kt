@@ -9,7 +9,6 @@ import com.example.savemysoul.MainApplication
 import com.example.savemysoul.api.RetrofitService
 import com.example.savemysoul.data.User
 import com.example.savemysoul.data.UserEntity
-import com.example.savemysoul.ui.screens.AddUser.AddUserUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -23,22 +22,15 @@ class HomeViewModel: ViewModel() {
     private val _uiState = MutableLiveData(HomeUiState())
     val uiState: LiveData<HomeUiState> get() = _uiState
 
-    private val _location = MutableLiveData<String>()
-
-    fun setLocation(location: String) {
-        _location.value = location
-    }
-
-    fun clearToast() {
+    fun setToast(toast: String) {
         _uiState.postValue(_uiState.value?.copy(
-            toast = ""
+            toast = toast
         ))
     }
 
-    fun sendSOS() {
+    fun sendSOS(location: String) {
         val userApi = RetrofitService().getUserApi()
         val users = userList.value ?: emptyList()
-        val location = _location.value ?: ""
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -46,38 +38,28 @@ class HomeViewModel: ViewModel() {
                     users.forEach {
                         val user = User(
                             id = it.user_id,
-                            message = "${it.user_message}. Моя локація: ${location}"
+                            message = "${it.user_message}. Моя локація: $location"
                         )
 
-                        Log.d("SendMessage", "User ID: ${user.id}, Message: ${user.message}")
+                        Log.d("SendMessage", "User ID: ${user.id}, Message: ${user.message}, Location: $location")
                         userApi.sendSOS(user).enqueue(object : Callback<User> {
                             override fun onResponse(call: Call<User>, response: Response<User>) {
                                 if (response.isSuccessful) {
-                                    _uiState.postValue(_uiState.value?.copy(
-                                        toast = response.message()
-                                    ))
+                                    setToast(response.message())
                                 } else {
-                                    _uiState.postValue(_uiState.value?.copy(
-                                        toast = response.errorBody().toString()
-                                    ))
+                                    setToast(response.errorBody().toString())
                                 }
                             }
                             override fun onFailure(call: Call<User>, throwable: Throwable) {
-                                _uiState.postValue(_uiState.value?.copy(
-                                    toast = throwable.message.toString()
-                                ))
+                                setToast(throwable.message.toString())
                             }
                         })
                     }
                 } else {
-                    _uiState.postValue(_uiState.value?.copy(
-                        toast = "Ваш список користувачів порожній."
-                    ))
+                    setToast("Ваш список користувачів порожній :(")
                 }
             } catch (e: Exception) {
-                _uiState.postValue(_uiState.value?.copy(
-                    toast = "Помилка: ${e.message}."
-                ))
+                setToast("Помилка: ${e.message} :(")
             }
         }
     }

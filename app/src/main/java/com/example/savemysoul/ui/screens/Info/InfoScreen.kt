@@ -112,7 +112,5 @@ fun InfoScreen(navController: NavController) {
                     }
             }
         )
-
-
     }
 }

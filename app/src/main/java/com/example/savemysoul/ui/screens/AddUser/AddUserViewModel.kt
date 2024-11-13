@@ -22,6 +22,18 @@ class AddUserViewModel: ViewModel() {
     private val _uiState = MutableLiveData(AddUserUiState())
     val uiState: LiveData<AddUserUiState> get() = _uiState
 
+    fun setToast(toast: String) {
+        _uiState.postValue(_uiState.value?.copy(
+            toast = toast
+        ))
+    }
+
+    fun setIsSuccess(isSuccess: Boolean) {
+        _uiState.postValue(_uiState.value?.copy(
+            isSuccess = isSuccess
+        ))
+    }
+
     fun onIdChanged(id: String) {
         _userId.value = id
     }
@@ -38,32 +50,14 @@ class AddUserViewModel: ViewModel() {
             try {
                 if (currentId.isNotEmpty() && currentMessage.isNotEmpty()) {
                     userDao.insertUser(UserEntity(user_id = currentId, user_message = currentMessage))
-                    _uiState.postValue(_uiState.value?.copy(
-                        toast = "Успішно додано користувача.",
-                        isSuccess = true
-                    ))
+                    setToast("Успішно додано користувача :)")
+                    setIsSuccess(true)
                 } else {
-                    _uiState.postValue(_uiState.value?.copy(
-                        toast = "Будь ласка ведіть всі поля."
-                    ))
+                    setToast("Будь ласка ведіть всі поля :|")
                 }
             } catch (e: Exception) {
-                _uiState.postValue(_uiState.value?.copy(
-                    toast = "Помилка: ${e.message}."
-                ))
+                setToast("Помилка: ${e.message} :(")
             }
         }
-    }
-
-    fun clearToast() {
-        _uiState.postValue(_uiState.value?.copy(
-            toast = ""
-        ))
-    }
-
-    fun clearIsSuccess() {
-        _uiState.postValue(_uiState.value?.copy(
-            isSuccess = null
-        ))
     }
 }
