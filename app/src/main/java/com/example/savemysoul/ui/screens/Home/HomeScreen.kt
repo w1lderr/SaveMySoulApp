@@ -175,7 +175,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
     }
 }
 
-private fun checkLocationAndSendSos(
+internal fun checkLocationAndSendSos(
     locationUtils: LocationUtils,
     context: Context,
     viewModel: HomeViewModel

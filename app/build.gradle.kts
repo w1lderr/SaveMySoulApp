@@ -42,9 +42,14 @@ android {
 }
 
 dependencies {
+    // Glance
+    implementation("androidx.glance:glance:1.1.1")
+    implementation("androidx.glance:glance-appwidget:1.1.1")
+
     // Location
     implementation("com.google.android.gms:play-services-location:21.3.0")
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.glance.appwidget)
 
     // Room
     val room_version = "2.6.1"
