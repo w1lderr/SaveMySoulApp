@@ -39,7 +39,7 @@ class HomeViewModel: ViewModel() {
                 users.forEach {
                     val user = User(
                         id = it.user_id,
-                        message = "${it.user_message}. Моя локація: https://www.google.com/maps?q=$latitude,$longitude"
+                        message = "${it.user_message}. <a href=\"https://www.google.com/maps?q=$latitude,$longitude\"><b>Моя локація</b></a>"
                     )
                     val response = _useCase.sendSOS(user)
                     setToast(response)
