@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Save My Soul</string>
-    <string name="description">some description</string>
+    <string name="widget_description">description</string>
 </resources>

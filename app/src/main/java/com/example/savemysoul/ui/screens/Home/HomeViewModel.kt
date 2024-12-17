@@ -1,15 +1,21 @@
 package com.example.savemysoul.ui.screens.Home
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.savemysoul.data.Models.User
 import com.example.savemysoul.data.Repository.HomeRepositoryImple
 import com.example.savemysoul.data.Models.UserEntity
 import com.example.savemysoul.data.Repository.UserRepositoryImple
 import com.example.savemysoul.domain.UseCase.HomeUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeViewModel: ViewModel() {
     private val _useCase = HomeUseCase(UserRepositoryImple(), HomeRepositoryImple())
@@ -25,35 +31,40 @@ class HomeViewModel: ViewModel() {
         _uiState.value = _uiState.value.copy(showProgressBar = showProgressBar)
     }
 
-    fun setToast(toast: String) {
-        _uiState.value = _uiState.value.copy(toast = toast)
-    }
+    fun sendSOS(latitude: Double, longitude: Double, context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val users = userList.first()
 
-    suspend fun sendSOS(latitude: Double, longitude: Double) {
-        val users = userList.first()
-
-        try {
-            if (users.isNotEmpty()) {
-                var sentCount = 0
-                showProgressBar(true)
-                users.forEach {
-                    val user = User(
-                        id = it.user_id,
-                        message = "${it.user_message}. <a href=\"https://www.google.com/maps?q=$latitude,$longitude\"><b>Моя локація</b></a>"
-                    )
-                    val response = _useCase.sendSOS(user)
-                    setToast(response)
-                    sentCount++
-                    setProgressBar(sentCount.toFloat() / users.size)
+            try {
+                if (users.isNotEmpty()) {
+                    var sentCount = 0
+                    showProgressBar(true)
+                    users.forEach {
+                        val user = User(
+                            id = it.user_id,
+                            message = "${it.user_message}. <a href=\"https://www.google.com/maps?q=$latitude,$longitude\"><b>Моя локація</b></a>"
+                        )
+                        val response = _useCase.sendSOS(user)
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
+                        }
+                        sentCount++
+                        setProgressBar(sentCount.toFloat() / users.size)
+                        delay(10)
+                    }
+                    delay(300)
+                    setProgressBar(0f)
+                    showProgressBar(false)
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "Ваш список користувачів порожній :(", Toast.LENGTH_SHORT).show()
+                    }
                 }
-                delay(300)
-                setProgressBar(0f)
-                showProgressBar(false)
-            } else {
-                setToast("Ваш список користувачів порожній :(")
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Помилка: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
-        } catch (e: Exception) {
-            setToast("Помилка: ${e.message}")
         }
     }
 }

@@ -37,25 +37,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
+import androidx.glance.GlanceTheme.colors
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.savemysoul.navigation.Screens
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsState(HomeUiState())
     val context = LocalContext.current
     val locationUtils = LocationUtils(context)
-
-    LaunchedEffect(uiState.toast) {
-        if (uiState.toast.isNotEmpty()) {
-            Toast.makeText(context, uiState.toast, Toast.LENGTH_SHORT).show()
-            viewModel.setToast("")
-        }
-    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -175,7 +166,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
     }
 }
 
-internal fun checkLocationAndSendSos(
+fun checkLocationAndSendSos(
     locationUtils: LocationUtils,
     context: Context,
     viewModel: HomeViewModel
@@ -183,22 +174,20 @@ internal fun checkLocationAndSendSos(
     locationUtils.getCurrentLocation(
         onLocationReceived = { location ->
             if (location != null) {
-                viewModel.viewModelScope.launch(Dispatchers.IO) {
-                    viewModel.sendSOS(location.latitude, location.longitude)
-                }
+                viewModel.sendSOS(location.latitude, location.longitude, context)
             } else {
-                viewModel.setToast("Не вдалося отримати вашу локацію :(")
+                Toast.makeText(context, "Не вдалося отримати вашу локацію :(", Toast.LENGTH_SHORT).show()
             }
         },
         onPermissionDenied = {
-            viewModel.setToast("Дайти доступ до вашої локації будь ласка :)")
+            Toast.makeText(context, "Дайте доступ до вашої локації будь ласка :)", Toast.LENGTH_SHORT).show()
             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
             val uri = Uri.fromParts("package", context.packageName, null)
             intent.data = uri
             context.startActivity(intent)
         },
         onLocationDisabled = {
-            viewModel.setToast("Вімкніть локацію будь ласка :)")
+            Toast.makeText(context, "Вімкніть локацію будь ласка :)", Toast.LENGTH_SHORT).show()
         }
     )
 }
