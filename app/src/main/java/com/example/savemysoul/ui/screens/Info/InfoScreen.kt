@@ -38,7 +38,7 @@ fun InfoScreen(navController: NavController) {
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold
         )) {
-            pushStringAnnotation(tag = "URL", annotation = "https://youtu.be/dQw4w9WgXcQ?si=12jCgPOlr-LDfFGb")
+            pushStringAnnotation(tag = "URL", annotation = "https://github.com/w1lderr/SaveMySoulApp")
             append("Код проекту Save My Soul")
             pop()
         }
