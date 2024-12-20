@@ -22,7 +22,7 @@ import com.example.savemysoul.MainActivity
 import com.example.savemysoul.R
 import com.example.savemysoul.ui.screens.Home.HomeViewModel
 import com.example.savemysoul.ui.screens.Home.LocationUtils
-import com.example.savemysoul.ui.screens.Home.checkLocationAndSendSos
+import com.example.savemysoul.ui.screens.Home.requestLocationAndSendSOS
 
 class Widget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -51,7 +51,7 @@ class Widget : GlanceAppWidget() {
                 .background(color = Color.Black)
                 .clickable {
                     context.startActivity(intent)
-                    checkLocationAndSendSos(locationUtils, context, viewModel)
+                    requestLocationAndSendSOS(locationUtils, context, viewModel)
                 }
         ) {
             Image(
