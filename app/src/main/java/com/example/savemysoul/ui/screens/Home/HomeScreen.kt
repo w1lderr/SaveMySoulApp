@@ -187,7 +187,7 @@ fun requestLocationAndSendSOS(
             context.startActivity(intent)
         },
         onLocationDisabled = {
-            Toast.makeText(context, "Вімкніть локацію будь ласка :)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Увімкніть локацію будь ласка :)", Toast.LENGTH_SHORT).show()
         }
     )
 }
