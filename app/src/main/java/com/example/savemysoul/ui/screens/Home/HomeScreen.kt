@@ -85,7 +85,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
 
         Button(
             onClick = {
-                checkLocationAndSendSos(
+                requestLocationAndSendSOS(
                     locationUtils,
                     context,
                     viewModel
@@ -166,7 +166,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
     }
 }
 
-fun checkLocationAndSendSos(
+fun requestLocationAndSendSOS(
     locationUtils: LocationUtils,
     context: Context,
     viewModel: HomeViewModel
