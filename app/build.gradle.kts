@@ -48,8 +48,6 @@ dependencies {
 
     // Location
     implementation("com.google.android.gms:play-services-location:21.3.0")
-    implementation(libs.androidx.runtime.livedata)
-    implementation(libs.androidx.glance.appwidget)
 
     // Room
     val room_version = "2.6.1"
