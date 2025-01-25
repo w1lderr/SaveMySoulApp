@@ -11,7 +11,7 @@ class TelegramUserServiceController {
         .create()
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.136:8080/TelegramUserServiceController/")
+        .baseUrl("")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
