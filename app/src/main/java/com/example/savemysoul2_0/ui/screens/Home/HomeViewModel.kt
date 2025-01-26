@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.savemysoul2_0.data.model.TelegramUserService
 import com.example.savemysoul2_0.data.repo.TelegramUserServiceRepoImple
-import com.example.savemysoul2_0.domain.useCase.TelegramUserServiceUseCase
+import com.example.savemysoul2_0.domain.useCase.HomeScreenUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeViewModel: ViewModel() {
-    private val _useCase = MutableStateFlow(TelegramUserServiceUseCase(TelegramUserServiceRepoImple()))
+    private val _useCase = MutableStateFlow(HomeScreenUseCase(TelegramUserServiceRepoImple()))
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: Flow<HomeUiState> get() = _uiState
 

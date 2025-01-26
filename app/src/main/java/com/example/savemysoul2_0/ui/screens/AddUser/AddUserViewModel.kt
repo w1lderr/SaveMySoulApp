@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.savemysoul2_0.data.model.TelegramUser
 import com.example.savemysoul2_0.data.repo.TelegramUserRepoImple
-import com.example.savemysoul2_0.domain.useCase.TelegramUserUseCase
+import com.example.savemysoul2_0.domain.useCase.AddScreenUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AddUserViewModel: ViewModel() {
-    private val _useCase = TelegramUserUseCase(TelegramUserRepoImple())
+    private val _useCase = AddScreenUseCase(TelegramUserRepoImple())
     private val _uiState = MutableStateFlow(AddUserUiState())
     private val _telegramUser = MutableStateFlow(TelegramUser())
     val uiState: Flow<AddUserUiState> get() = _uiState
