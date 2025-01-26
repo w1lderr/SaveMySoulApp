@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.savemysoul2_0.data.model.TelegramUser
 import com.example.savemysoul2_0.data.repo.TelegramUserRepoImple
-import com.example.savemysoul2_0.domain.usecase.TelegramUserUseCase
+import com.example.savemysoul2_0.domain.useCase.TelegramUserUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

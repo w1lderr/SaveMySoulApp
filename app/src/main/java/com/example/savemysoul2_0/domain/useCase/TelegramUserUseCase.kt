@@ -1,4 +1,4 @@
-package com.example.savemysoul2_0.domain.usecase
+package com.example.savemysoul2_0.domain.useCase
 
 import com.example.savemysoul2_0.data.model.TelegramUser
 import com.example.savemysoul2_0.domain.repo.TelegramUserRepo

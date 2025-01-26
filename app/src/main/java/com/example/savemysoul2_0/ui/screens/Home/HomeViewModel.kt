@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.savemysoul2_0.data.model.TelegramUserService
 import com.example.savemysoul2_0.data.repo.TelegramUserServiceRepoImple
-import com.example.savemysoul2_0.domain.usecase.TelegramUserServiceUseCase
+import com.example.savemysoul2_0.domain.useCase.TelegramUserServiceUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
