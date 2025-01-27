@@ -1,8 +1,8 @@
-# SaveMySoulApp
+# **SaveMySoulApp**
 
 Save my soul application
 
-# Introduction
+# **Introduction**
 
 Save my soul - it's a project to ensure your safety.<br>
 In the save my soul app you can easily and quickly send SOS to telegram users you have added.<br>
