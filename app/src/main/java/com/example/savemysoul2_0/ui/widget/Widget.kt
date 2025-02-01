@@ -31,15 +31,18 @@ import com.example.savemysoul2_0.androidUuidGenerator.AndroidUuidGenerator
 import com.example.savemysoul2_0.ui.screens.Home.HomeViewModel
 import com.example.savemysoul2_0.ui.screens.Home.LocationUtils
 import com.example.savemysoul2_0.ui.screens.Home.requestLocationAndSendSOS
+import javax.inject.Inject
 
 class Widget : GlanceAppWidget() {
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val homeViewModel = HomeViewModel()
-        val androidUuidGenerator = AndroidUuidGenerator.getOrCreateGuid(context)
-        val locationUtils = LocationUtils(context)
+    @Inject
+    lateinit var homeViewModel: HomeViewModel
 
+    @Inject
+    lateinit var locationUtils: LocationUtils
+
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
-            MyWidget(homeViewModel, locationUtils, context, androidUuidGenerator)
+            MyWidget(homeViewModel, locationUtils, context)
         }
     }
 
@@ -48,7 +51,6 @@ class Widget : GlanceAppWidget() {
         viewModel: HomeViewModel,
         locationUtils: LocationUtils,
         context: Context,
-        uuid: String
     ) {
         Box(
             modifier = GlanceModifier
@@ -56,7 +58,7 @@ class Widget : GlanceAppWidget() {
                 .cornerRadius(20.dp)
                 .background(color = Color.Black)
                 .clickable {
-                    requestLocationAndSendSOS(uuid, locationUtils, context, viewModel)
+                    requestLocationAndSendSOS(locationUtils, context, viewModel)
                 }
         ) {
             Image(

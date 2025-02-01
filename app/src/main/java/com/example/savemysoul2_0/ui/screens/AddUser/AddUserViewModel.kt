@@ -2,17 +2,22 @@ package com.example.savemysoul2_0.ui.screens.AddUser
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.savemysoul2_0.androidUuidGenerator.AndroidUuidGenerator
 import com.example.savemysoul2_0.data.model.TelegramUser
-import com.example.savemysoul2_0.data.repo.TelegramUserRepoImple
-import com.example.savemysoul2_0.domain.useCase.AddScreenUseCase
+import com.example.savemysoul2_0.domain.useCase.AddUserScreenUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class AddUserViewModel: ViewModel() {
-    private val _useCase = AddScreenUseCase(TelegramUserRepoImple())
+@HiltViewModel
+class AddUserViewModel @Inject constructor(
+    private val _useCase: AddUserScreenUseCase,
+    private val _androidUuidGenerator: AndroidUuidGenerator
+): ViewModel() {
     private val _uiState = MutableStateFlow(AddUserUiState())
     private val _telegramUser = MutableStateFlow(TelegramUser())
     val uiState: Flow<AddUserUiState> get() = _uiState
@@ -34,9 +39,10 @@ class AddUserViewModel: ViewModel() {
         _telegramUser.value = _telegramUser.value.copy(telegramMessage = message)
     }
 
-    fun addTelegramUser(uuid: String) {
+    fun addTelegramUser() {
         val currentTelegramId = _telegramUser.value.telegramId
         val currentTelegramMessage = _telegramUser.value.telegramMessage
+        val uuid = _androidUuidGenerator.getOrCreateGuid()
 
         viewModelScope.launch(Dispatchers.IO) {
             try {

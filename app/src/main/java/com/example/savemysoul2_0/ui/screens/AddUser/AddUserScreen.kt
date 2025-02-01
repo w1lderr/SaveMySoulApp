@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.savemysoul2_0.androidUuidGenerator.AndroidUuidGenerator
@@ -43,11 +44,10 @@ import com.example.savemysoul2_0.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddUserScreen(navController: NavController, viewModel: AddUserViewModel = viewModel()) {
+fun AddUserScreen(navController: NavController, viewModel: AddUserViewModel = hiltViewModel()) {
     val uiState = viewModel.uiState.collectAsState(AddUserUiState())
     val telegramUser = viewModel.telegramUser.collectAsState(TelegramUser())
     val context = LocalContext.current
-    val androidUuidGenerator = AndroidUuidGenerator.getOrCreateGuid(context)
 
     LaunchedEffect(uiState.value.toast) {
         if (uiState.value.toast.isNotEmpty()) {
@@ -135,7 +135,7 @@ fun AddUserScreen(navController: NavController, viewModel: AddUserViewModel = vi
             Spacer(modifier = Modifier.height(20.dp))
 
             Button( onClick = {
-                viewModel.addTelegramUser(androidUuidGenerator)
+                viewModel.addTelegramUser()
             },
                 modifier = Modifier.size(width = 280.dp, height = 60.dp),
                 shape = RoundedCornerShape(15.dp),

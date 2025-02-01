@@ -4,32 +4,35 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.provider.Settings
+import javax.inject.Inject
 import kotlin.random.Random
 
-object AndroidUuidGenerator {
-    private const val UUID_KEY = "android_guid"
+class AndroidUuidGenerator @Inject constructor(
+    private val context: Context
+) {
+    private val UUID_KEY = "android_guid"
 
     // Function to get or create a GUID
-    fun getOrCreateGuid(context: Context): String {
-        val storedGuid = getStoredGuid(context)
+    fun getOrCreateGuid(): String {
+        val storedGuid = getStoredGuid()
         return if (storedGuid != null) {
             storedGuid
         } else {
-            val deviceData = getDeviceUniqueData(context)
+            val deviceData = getDeviceUniqueData()
             val generatedGuid = hashToGuid(deviceData)
-            saveGuid(context, generatedGuid)
+            saveGuid(generatedGuid)
             generatedGuid
         }
     }
 
     // Get unique device data
-    private fun getDeviceUniqueData(context: Context): String {
-        return getAndroidDeviceId(context)
+    private fun getDeviceUniqueData(): String {
+        return getAndroidDeviceId()
     }
 
     // Get the device identifier
     @SuppressLint("HardwareIds")
-    private fun getAndroidDeviceId(context: Context): String {
+    private fun getAndroidDeviceId(): String {
         return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
     }
 
@@ -47,13 +50,13 @@ object AndroidUuidGenerator {
     }
 
     // Save the GUID to the device
-    private fun saveGuid(context: Context, guid: String) {
+    private fun saveGuid(guid: String) {
         val preferences: SharedPreferences = context.getSharedPreferences("device_prefs", Context.MODE_PRIVATE)
         preferences.edit().putString(UUID_KEY, guid).apply()
     }
 
     // Get the stored GUID
-    private fun getStoredGuid(context: Context): String? {
+    private fun getStoredGuid(): String? {
         val preferences: SharedPreferences = context.getSharedPreferences("device_prefs", Context.MODE_PRIVATE)
         return preferences.getString(UUID_KEY, null)
     }

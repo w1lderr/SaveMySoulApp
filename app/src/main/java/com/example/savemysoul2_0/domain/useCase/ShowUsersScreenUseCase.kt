@@ -1,9 +1,10 @@
 package com.example.savemysoul2_0.domain.useCase
 
 import com.example.savemysoul2_0.data.model.TelegramUser
-import com.example.savemysoul2_0.domain.repo.TelegramUserRepo
+import com.example.savemysoul2_0.data.repo.TelegramUserRepo
+import javax.inject.Inject
 
-class ShowUsersScreenUseCase(private val telegramUserRepo: TelegramUserRepo) {
+class ShowUsersScreenUseCase @Inject constructor(private val telegramUserRepo: TelegramUserRepo) {
     suspend fun getTelegramUsers(identifier: String): List<TelegramUser> {
         val response = telegramUserRepo.getTelegramUsers(identifier)
         return response

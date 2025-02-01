@@ -11,8 +11,11 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import javax.inject.Inject
 
-class LocationUtils(private val context: Context) {
+class LocationUtils @Inject constructor(
+    private val context: Context
+) {
     private val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 
     private fun checkLocationPermission(): Boolean {

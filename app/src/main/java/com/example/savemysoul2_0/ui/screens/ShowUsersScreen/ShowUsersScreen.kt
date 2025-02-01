@@ -47,18 +47,18 @@ import com.example.savemysoul2_0.androidUuidGenerator.AndroidUuidGenerator
 import com.example.savemysoul2_0.data.model.TelegramUser
 import com.example.savemysoul2_0.navigation.Screens
 import androidx.compose.ui.text.input.ImeAction
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShowUsersScreen(navController: NavController, viewModel: ShowUsersViewModel = viewModel()) {
+fun ShowUsersScreen(navController: NavController, viewModel: ShowUsersViewModel = hiltViewModel()) {
     val user = viewModel.user.collectAsState(TelegramUser())
     val selectedUser = viewModel.selectedUser.collectAsState(TelegramUser())
     val uiState = viewModel.uiState.collectAsState(ShowUsersUiState())
     val context = LocalContext.current
-    val androidUuidGenerator = AndroidUuidGenerator.getOrCreateGuid(context)
 
     LaunchedEffect(Unit) {
-        viewModel.getTelegramUsers(androidUuidGenerator)
+        viewModel.getTelegramUsers()
     }
 
     LaunchedEffect(uiState.value.toast) {

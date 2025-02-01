@@ -2,17 +2,22 @@ package com.example.savemysoul2_0.ui.screens.ShowUsersScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.savemysoul2_0.androidUuidGenerator.AndroidUuidGenerator
 import com.example.savemysoul2_0.data.model.TelegramUser
-import com.example.savemysoul2_0.data.repo.TelegramUserRepoImple
 import com.example.savemysoul2_0.domain.useCase.ShowUsersScreenUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ShowUsersViewModel: ViewModel() {
-    private val _useCase = ShowUsersScreenUseCase(TelegramUserRepoImple())
+@HiltViewModel
+class ShowUsersViewModel @Inject constructor(
+    private val _useCase: ShowUsersScreenUseCase,
+    private val _androidUuidGenerator: AndroidUuidGenerator
+): ViewModel() {
     private val _uiState = MutableStateFlow(ShowUsersUiState())
     private val _selectedUser = MutableStateFlow(TelegramUser())
     private val _user = MutableStateFlow(TelegramUser())
@@ -67,7 +72,8 @@ class ShowUsersViewModel: ViewModel() {
         }
     }
 
-    fun getTelegramUsers(uuid: String) {
+    fun getTelegramUsers() {
+        val uuid = _androidUuidGenerator.getOrCreateGuid()
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val users = _useCase.getTelegramUsers(uuid)

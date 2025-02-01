@@ -30,19 +30,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.savemysoul2_0.navigation.Screens
 import android.content.Intent
 import android.provider.Settings
-import com.example.savemysoul2_0.androidUuidGenerator.AndroidUuidGenerator
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewModel()) {
+fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltViewModel()) {
     val uiState = viewModel.uiState.collectAsState(HomeUiState())
     val context = LocalContext.current
-    val androidUuidGenerator = AndroidUuidGenerator.getOrCreateGuid(context)
-    val locationUtils = LocationUtils(context)
 
     Column(
         modifier = Modifier
@@ -84,8 +81,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
         Button(
             onClick = {
                 requestLocationAndSendSOS(
-                    uuid = androidUuidGenerator,
-                    locationUtils = locationUtils,
+                    locationUtils = viewModel.locationUtils,
                     context = context,
                     viewModel = viewModel
                 )
@@ -163,7 +159,6 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewMode
 }
 
 fun requestLocationAndSendSOS(
-    uuid: String,
     locationUtils: LocationUtils,
     context: Context,
     viewModel: HomeViewModel
@@ -171,7 +166,7 @@ fun requestLocationAndSendSOS(
     locationUtils.getCurrentLocation(
         onLocationReceived = { location ->
             if (location != null) {
-                viewModel.sendSOS(uuid, "<a href=\"https://www.google.com/maps?q=${location.latitude},${location.longitude}\"><b>Моя локація</b></a>", context)
+                viewModel.sendSOS("<a href=\"https://www.google.com/maps?q=${location.latitude},${location.longitude}\"><b>Моя локація</b></a>", context)
             } else {
                 Toast.makeText(context, "Не вдалося отримати вашу локацію :(", Toast.LENGTH_SHORT).show()
             }

@@ -2,12 +2,12 @@ package com.example.savemysoul2_0.data.repo
 
 import com.example.savemysoul2_0.api.TelegramUserServiceController
 import com.example.savemysoul2_0.data.model.TelegramUserService
-import com.example.savemysoul2_0.domain.repo.TelegramUserServiceRepo
+import javax.inject.Inject
 
-class TelegramUserServiceRepoImple: TelegramUserServiceRepo {
+class TelegramUserServiceRepo @Inject constructor() {
     private val telegramUserServiceApi = TelegramUserServiceController().getTelegramUserServiceApi()
 
-    override suspend fun sendSOS(telegramUserService: TelegramUserService): String {
+    suspend fun sendSOS(telegramUserService: TelegramUserService): String {
         return try {
             val response = telegramUserServiceApi.sendSOS(telegramUserService)
             if (response.isSuccessful) {
