@@ -1,7 +1,6 @@
 package com.example.savemysoul2_0.di
 
 import com.example.savemysoul2_0.data.repo.TelegramUserRepo
-import com.example.savemysoul2_0.data.repo.TelegramUserServiceRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,11 +14,5 @@ class ModuleRepo {
     @Singleton
     fun provideTelegramUserRepo(): TelegramUserRepo {
         return TelegramUserRepo()
-    }
-
-    @Provides
-    @Singleton
-    fun provideTelegramUserServiceRepo(): TelegramUserServiceRepo {
-        return TelegramUserServiceRepo()
     }
 }

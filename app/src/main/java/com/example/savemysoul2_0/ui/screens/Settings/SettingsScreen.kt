@@ -1,4 +1,4 @@
-package com.example.savemysoul2_0.ui.screens.Info
+package com.example.savemysoul2_0.ui.screens.Settings
 
 import android.content.Intent
 import androidx.compose.foundation.background
@@ -31,7 +31,7 @@ import com.example.savemysoul2_0.navigation.Screens
 import androidx.core.net.toUri
 
 @Composable
-fun InfoScreen(navController: NavController) {
+fun SettingsScreen(navController: NavController) {
     val context = LocalContext.current
 
     val linkToSourceCode = buildAnnotatedString {

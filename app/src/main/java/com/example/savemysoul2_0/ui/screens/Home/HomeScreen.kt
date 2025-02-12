@@ -34,12 +34,15 @@ import androidx.navigation.NavController
 import com.example.savemysoul2_0.navigation.Screens
 import android.content.Intent
 import android.provider.Settings
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltViewModel()) {
     val uiState = viewModel.uiState.collectAsState(HomeUiState())
     val context = LocalContext.current
+    val locationUtils = LocationUtils(context)
 
     Column(
         modifier = Modifier
@@ -78,43 +81,51 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
 
         Spacer(modifier = Modifier.height(150.dp))
 
-        Button(
-            onClick = {
-                requestLocationAndSendSOS(
-                    locationUtils = viewModel.locationUtils,
-                    context = context,
-                    viewModel = viewModel
+        if (uiState.value.isLocationSharing) {
+            Spacer(modifier = Modifier.height(60.dp))
+
+            Button(
+                onClick = {
+                    viewModel.webSocketClient.close()
+                    viewModel.setIsLocationSharingStatus(false)
+                },
+                modifier = Modifier.size(width = 270.dp, height = 60.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red,
+                    contentColor = Color.White
+                ),
+            ) {
+                Text(
+                    text = "Зупинити трансляцію",
+                    fontSize = 20.sp,
+                    color = Color.White
                 )
-            },
-            modifier = Modifier.size(width = 270.dp, height = 120.dp),
-            shape = RoundedCornerShape(15.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Red,
-                contentColor = Color.White
-            ),
-            enabled = !uiState.value.showProgress
-        ) {
-            Text(
-                text = "SOS",
-                fontSize = 80.sp,
-                fontWeight = FontWeight.Normal,
-                color = Color.White
-            )
-        }
-
-        Spacer(modifier = Modifier.height(40.dp))
-
-        if (uiState.value.showProgress == true) {
-            Text(
-                text = "SOS надіслано!",
-                fontSize = 20.sp,
-                color = Color.White
-            )
+            }
         } else {
-            Spacer(modifier = Modifier.height(10.dp))
+            Button(
+                onClick = {
+                    requestLocationAndSendSOS(locationUtils, context, viewModel)
+                    viewModel.setIsLocationSharingStatus(true)
+                    viewModel.startLocationSharing(context, locationUtils)
+                },
+                modifier = Modifier.size(width = 270.dp, height = 120.dp),
+                shape = RoundedCornerShape(15.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Red,
+                    contentColor = Color.White
+                ),
+            ) {
+                Text(
+                    text = "SOS",
+                    fontSize = 80.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+            }
         }
 
-        Spacer(modifier = Modifier.height(100.dp))
+        Spacer(modifier = Modifier.height(150.dp))
 
         Button(
             onClick = {
@@ -166,7 +177,7 @@ fun requestLocationAndSendSOS(
     locationUtils.getCurrentLocation(
         onLocationReceived = { location ->
             if (location != null) {
-                viewModel.sendSOS("<a href=\"https://www.google.com/maps?q=${location.latitude},${location.longitude}\"><b>Моя локація</b></a>", context)
+                viewModel.sendSOS(context, location.latitude, location.longitude)
             } else {
                 Toast.makeText(context, "Не вдалося отримати вашу локацію :(", Toast.LENGTH_SHORT).show()
             }

@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.savemysoul2_0.ui.screens.AddUser.AddUserScreen
 import com.example.savemysoul2_0.ui.screens.Home.HomeScreen
-import com.example.savemysoul2_0.ui.screens.Info.InfoScreen
+import com.example.savemysoul2_0.ui.screens.Settings.SettingsScreen
 import com.example.savemysoul2_0.ui.screens.ShowUsersScreen.ShowUsersScreen
 
 @Composable
@@ -16,7 +16,7 @@ fun Navigation(navController: NavHostController) {
             HomeScreen(navController)
         }
         composable(Screens.InfoScreen.name) {
-            InfoScreen(navController)
+            SettingsScreen(navController)
         }
         composable(Screens.AddUserScreen.name) {
             AddUserScreen(navController)

@@ -33,6 +33,7 @@ import com.example.savemysoul2_0.ui.screens.Home.LocationUtils
 import com.example.savemysoul2_0.ui.screens.Home.requestLocationAndSendSOS
 import javax.inject.Inject
 
+
 class Widget : GlanceAppWidget() {
     @Inject
     lateinit var homeViewModel: HomeViewModel

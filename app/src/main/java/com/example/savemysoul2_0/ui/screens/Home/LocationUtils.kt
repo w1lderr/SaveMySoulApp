@@ -17,6 +17,7 @@ class LocationUtils @Inject constructor(
     private val context: Context
 ) {
     private val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+    private var locationCallback: LocationCallback? = null
 
     private fun checkLocationPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
@@ -54,6 +55,7 @@ class LocationUtils @Inject constructor(
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
+
                 onLocationReceived(location)
             } else {
                 startLocationUpdates(onLocationReceived)
@@ -61,31 +63,34 @@ class LocationUtils @Inject constructor(
         }
     }
 
-    private fun startLocationUpdates(onLocationReceived: (android.location.Location?) -> Unit) {
-        // Location request(send request for new location)
+    fun startLocationUpdates(
+        onLocationReceived: (android.location.Location?) -> Unit
+    ) {
         val locationRequest = LocationRequest.create().apply {
-            interval = 1000
-            fastestInterval = 500
+            interval = 5000
+            fastestInterval = 3000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
 
-        // Create LocationCallback for getting location updates
-        val locationCallback = object : LocationCallback() {
+        locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 super.onLocationResult(locationResult)
-                // Checking there is location
                 locationResult.locations.firstOrNull()?.let { location ->
                     onLocationReceived(location)
-                    // Stopping next updates location
-                    fusedLocationClient.removeLocationUpdates(this)
                 }
             }
         }
 
         try {
-            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback!!, Looper.getMainLooper())
         } catch (exception: SecurityException) {
             Log.e("error", exception.printStackTrace().toString())
+        }
+    }
+
+    private fun stopLocationUpdates() {
+        locationCallback?.let {
+            fusedLocationClient.removeLocationUpdates(it)
         }
     }
 }
