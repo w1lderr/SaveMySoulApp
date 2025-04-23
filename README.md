@@ -52,7 +52,16 @@ To use Save My Soul project you need:
 - Glance
 
 **Rest Api**:
-
+ - Java
+ - Spring Boot
+ - Spring Web
+ - Web Socket
+ - Lombok
+ - Postgresql Driver
+ - Spring Data Jpa
+**Telegram Bot**:
+ - Python
+ - Aiogram
 
 ## Contributing
 I welcome contributions! Please open an issue or submit a pull request.
