@@ -59,6 +59,7 @@ To use Save My Soul project you need:
  - Lombok
  - Postgresql Driver
  - Spring Data Jpa
+
 **Telegram Bot**:
  - Python
  - Aiogram
