@@ -1,4 +1,4 @@
-# **Save My Soul App**
+# **Save My Soul**
 
 <picture>
    <img alt="SaveMySoul Logo" src="https://github.com/w1lderr/SaveMySoulApp/blob/master/logoforeadme.png">
