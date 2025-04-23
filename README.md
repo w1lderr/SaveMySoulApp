@@ -21,11 +21,11 @@ To set up and run Save My Soul locally, follow these steps:
       git clone https://github.com/w1lderr/SaveMySoulApp
       ```
       
-      ``` bash
+   2. ``` bash
       git clone https://github.com/w1lderr/SaveMySoulRestAPI
       ```
       
-      ``` bash
+   3. ``` bash
        git clone https://github.com/w1lderr/SaveMySoulBot
       ```
    
