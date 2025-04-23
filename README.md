@@ -5,7 +5,7 @@ Save my soul application
 # **Introduction**
 
 Save my soul - it's a project to ensure your safety.<br>
-In the save my soul app you can easily and quickly send SOS to telegram users you have added.<br>
+Using save my soul project, you can easily and quickly send SOS to telegram users you have added.<br>
 
 # **Usage**
 To use SaveMySoul project you need:
@@ -15,3 +15,4 @@ To use SaveMySoul project you need:
   4. Send a SOS. And you can also add a widget to make sending an SOS more comfortable.
 
 <br>Here you can find all [instruction](https://save-my-soul-site-instruction.vercel.app/)
+
