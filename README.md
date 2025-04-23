@@ -6,7 +6,7 @@
 
 # **Introduction**
 
-SaveMySoul - it's a project to ensure your safety.<br>
+**Save My Soul** - it's a project to ensure your safety.<br>
 With Save My Soul project, you can easily and quickly send SOS to telegram users you have added.<br>
 
 # **Features**
