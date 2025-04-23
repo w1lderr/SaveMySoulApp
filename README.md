@@ -23,3 +23,9 @@ To use Save My Soul project you need:
   4. Send a SOS. And you can also add a widget to make sending an SOS more comfortable.
   
 # **[Instruction](https://save-my-soul-site-instruction.vercel.app/)**
+
+## Contributing
+I welcome contributions! Please open an issue or submit a pull request.
+
+## License
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
