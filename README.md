@@ -15,11 +15,23 @@ With Save My Soul project, you can easily and quickly send SOS to telegram users
 - 💪 **Reliability**: SOS will be sent to all users you have added.
 - 📱 **Mobility and accessibility**: Save My Soul is available on Android.
 
+# **Installation**
+To set up and run SaveMySoul locally, follow these steps:
+   1. Clone the repository
+      ```
+       git clone https://github.com/w1lderr/SaveMySoulApp
+      ```
+
 # **Usage**
 To use SaveMySoul project you need:
   1. Go to the [telegram bot](@savemysoull_bot), send command [/start]() and copy your id.
-  2. Download the [application](https://t.me/savemysoultelegramchannel) from the telegram channel.
-  3. Give access to location, and add Telegram user
+  3. Give the app access to location, and add Telegram user
   4. Send a SOS. And you can also add a widget to make sending an SOS more comfortable.
   
 # **[Instruction](https://save-my-soul-site-instruction.vercel.app/)**
+
+## Contributing
+I welcome contributions! Please open an issue or submit a pull request.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
