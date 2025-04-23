@@ -17,12 +17,12 @@ With Save My Soul project, you can easily and quickly send SOS to telegram users
 
 # **Installation**
 To set up and run Save My Soul locally, follow these steps:
-      ```bash
-       git clone https://github.com/w1lderr/SaveMySoulApp
+   1. ```bash
+      git clone https://github.com/w1lderr/SaveMySoulApp
       ```
       
       ``` bash
-       git clone https://github.com/w1lderr/SaveMySoulRestAPI
+      git clone https://github.com/w1lderr/SaveMySoulRestAPI
       ```
       
       ``` bash
