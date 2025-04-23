@@ -27,4 +27,4 @@ To use SaveMySoul project you need:
 I welcome contributions! Please open an issue or submit a pull request.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the APACHE License - see the [LICENSE](LICENSE) file for details.
