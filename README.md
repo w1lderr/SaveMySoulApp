@@ -1,12 +1,12 @@
-# **SaveMySoulApp**
+# **Save My Soul App**
 
 <picture>
-   <img alt="Save my soul Logo" src="https://github.com/w1lderr/SaveMySoulApp/blob/master/logoforeadme.png">
+   <img alt="SaveMySoul Logo" src="https://github.com/w1lderr/SaveMySoulApp/blob/master/logoforeadme.png">
 </picture>
 
 # **Introduction**
 
-Save my soul - it's a project to ensure your safety.<br>
+SaveMySoul - it's a project to ensure your safety.<br>
 With Save My Soul project, you can easily and quickly send SOS to telegram users you have added.<br>
 
 # **Usage**
