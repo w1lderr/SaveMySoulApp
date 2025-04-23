@@ -1,6 +1,8 @@
 # **SaveMySoulApp**
 
-Save my soul application
+<picture>
+   <img alt="Save my soul Logo" src="https://github.com/w1lderr/SaveMySoulApp/blob/master/logoforeadme.png">
+</picture>
 
 # **Introduction**
 
