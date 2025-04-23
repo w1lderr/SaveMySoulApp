@@ -14,5 +14,4 @@ To use SaveMySoul project you need:
   3. Give access to location, and add Telegram user
   4. Send a SOS. And you can also add a widget to make sending an SOS more comfortable.
   
-# **Instruction**
-  [Here](https://save-my-soul-site-instruction.vercel.app/)
+# **[Instruction](https://save-my-soul-site-instruction.vercel.app/)**
