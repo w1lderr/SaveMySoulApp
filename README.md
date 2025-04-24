@@ -1,7 +1,7 @@
 # **Save My Soul**
 
 <picture>
-   <img alt="SaveMySoul Logo" src="https://github.com/w1lderr/SaveMySoulApp/blob/master/logoforeadme.png">
+   <img alt="SaveMySoul Logo" src="https://github.com/w1lderr/SaveMySoulApp/blob/master/Group%2030.svg">
 </picture>
 
 # **Introduction**
