@@ -8,7 +8,6 @@ import androidx.navigation.compose.rememberNavController
 import com.example.savemysoul2_0.navigation.Navigation
 import com.example.savemysoul2_0.ui.theme.SaveMySoul2_0Theme
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

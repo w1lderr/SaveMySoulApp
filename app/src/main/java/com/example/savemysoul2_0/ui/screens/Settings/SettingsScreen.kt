@@ -26,9 +26,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.navigation.NavController
 import com.example.savemysoul2_0.navigation.Screens
-import androidx.core.net.toUri
 
 @Composable
 fun SettingsScreen(navController: NavController) {
